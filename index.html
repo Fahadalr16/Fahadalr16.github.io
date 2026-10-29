@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fahad AlAbdulrazzaq</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: single column, a hero that states who he is, then quiet sections; terminal docks as a bottom sheet when opened */
+:root{
+  --bg:#f3f5f7; --surface:#ffffff; --ink:#14202b; --muted:#5a6876; --line:#d9e0e6;
+  --accent:#b86e12; --accent-ink:#ffffff; --term-bg:#0f1820; --term-fg:#d6e2ea; --term-dim:#7d93a3; --term-ok:#e6a54a;
+  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body:"IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e151c; --surface:#151f28; --ink:#e3eaf0; --muted:#93a3b1; --line:#253441;
+  --accent:#e6a54a; --accent-ink:#1a1206; --term-bg:#070c11; --term-fg:#d6e2ea; --term-dim:#6f8697; --term-ok:#e6a54a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e151c; --surface:#151f28; --ink:#e3eaf0; --muted:#93a3b1; --line:#253441;
+  --accent:#e6a54a; --accent-ink:#1a1206; --term-bg:#070c11; --term-fg:#d6e2ea; --term-dim:#6f8697; --term-ok:#e6a54a; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6}
+.wrap{max-width:760px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:56px 120px;display:flex;flex-direction:column;gap:64px}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+
+/* hero */
+.hero{display:flex;flex-direction:column;gap:18px}
+.prompt{font-family:var(--mono);font-size:13px;color:var(--muted);letter-spacing:.02em}
+.prompt b{color:var(--accent);font-weight:600}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(40px,8vw,68px);line-height:1.02;margin:0;letter-spacing:-.02em;text-wrap:balance}
+.lede{font-size:19px;color:var(--muted);margin:0;max-width:58ch}
+.lede strong{color:var(--ink);font-weight:500}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:6px}
+.btn{font:600 15px/1 var(--body);padding:13px 18px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);text-decoration:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn .k{font-family:var(--mono);font-size:12px;opacity:.7}
+.btn:hover{filter:brightness(1.05)}
+
+/* sections */
+section{display:flex;flex-direction:column;gap:18px}
+h2{font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.14em;color:var(--accent);margin:0}
+p{margin:0;max-width:65ch}
+.about p+p{margin-top:12px}
+
+.now{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.now div{border-top:2px solid var(--ink);padding-top:10px}
+.now .lbl{font-family:var(--mono);font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.now .val{font-weight:600;line-height:1.35;margin-top:4px}
+.now .sub{font-size:14px;color:var(--muted);margin-top:2px}
+
+.projects{display:flex;flex-direction:column}
+.proj{display:grid;grid-template-columns:110px 1fr;gap:6px 20px;padding:18px 0;border-top:1px solid var(--line)}
+.proj:last-child{border-bottom:1px solid var(--line)}
+.proj .when{font-family:var(--mono);font-size:13px;color:var(--muted);padding-top:3px}
+.proj h3{font-family:var(--display);font-weight:500;font-size:20px;margin:0;line-height:1.25;text-wrap:balance}
+.proj p{color:var(--muted);font-size:15px;grid-column:2}
+.proj .meta{grid-column:2;display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.tag{font-family:var(--mono);font-size:12px;padding:2px 8px;border-radius:4px;background:var(--surface);border:1px solid var(--line);color:var(--muted)}
+.proj a.link{grid-column:2;font-size:14px;font-weight:500;color:var(--accent);text-decoration:none;width:fit-content}
+@media (max-width:520px){.proj{grid-template-columns:1fr}.proj p,.proj .meta,.proj a.link{grid-column:1}}
+
+.skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+.skills h3{font-size:14px;font-weight:600;margin:0 0 6px}
+.skills p{font-size:15px;color:var(--muted)}
+
+.contact{display:flex;flex-wrap:wrap;gap:10px}
+.contact .btn{font-weight:500}
+.note{font-size:13px;color:var(--muted)}
+footer{font-family:var(--mono);font-size:12px;color:var(--muted)}
+
+/* terminal */
+.term{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--term-bg);color:var(--term-fg);font-family:var(--mono);font-size:14px;border-top:1px solid #2a3a47;height:min(58vh,420px);display:flex;flex-direction:column;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-bottom:env(safe-area-inset-bottom,0px);
+  box-shadow:0 -12px 40px rgba(0,0,0,.25);transform:translateY(0);transition:transform .25s ease}
+.term[hidden]{display:flex!important;transform:translateY(105%);visibility:hidden}
+.term-bar{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #22313c;color:var(--term-dim);font-size:12px;gap:12px}
+.term-bar button{background:none;border:1px solid #2f414e;color:var(--term-fg);font:12px var(--mono);padding:4px 10px;border-radius:4px;cursor:pointer}
+.term-out{flex:1;overflow-y:auto;padding:12px 0;white-space:pre-wrap;word-break:break-word;min-width:0}
+.term-out .cmd{color:var(--term-fg)}
+.term-out .cmd::before{content:"fahad@kw:~$ ";color:var(--term-ok)}
+.term-out .dim{color:var(--term-dim)}
+.term-out .hi{color:var(--term-ok)}
+.term-out a{color:var(--term-ok)}
+.chips{display:flex;gap:6px;flex-wrap:wrap;padding:8px 0}
+.chips button{background:#16232d;border:1px solid #2a3a47;color:var(--term-fg);font:12px var(--mono);padding:4px 9px;border-radius:4px;cursor:pointer}
+.term-in{display:flex;align-items:center;gap:8px;padding:10px 0 12px;border-top:1px solid #22313c}
+.term-in label{color:var(--term-ok);white-space:nowrap}
+.term-in input{flex:1;min-width:0;background:transparent;border:0;color:var(--term-fg);font:14px var(--mono);outline:none;caret-color:var(--term-ok)}
+@media (prefers-reduced-motion:reduce){.term{transition:none}}
+</style>
+<style>body{margin:0} [hidden]{display:none!important}</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <div class="prompt"><b>$</b> whoami</div>
+    <h1>Fahad AlAbdulrazzaq</h1>
+    <p class="lede">Computer Science graduate from <strong>King's College London</strong>, now working toward a career in <strong>cybersecurity</strong>. I like understanding how systems leak, break and get defended, and writing it up clearly.</p>
+    <div class="actions">
+      <a class="btn primary" id="cv-btn" href="resume.pdf" target="_blank" rel="noopener">View my CV</a>
+      <button class="btn" id="term-open" type="button">Open terminal <span class="k">&gt;_</span></button>
+    </div>
+  </header>
+
+  <section class="about" aria-labelledby="h-about">
+    <h2 id="h-about">About</h2>
+    <p>I'm from Kuwait and studied Computer Science in the Department of Informatics at KCL. My final-year project modelled how browsers store, share and keep cookies as a graph, which turned a vague interest in privacy into a real interest in security.</p>
+    <p>I'm spending a gap year building hands-on skills before graduate study: a full-time cybersecurity bootcamp, an internship, and a public portfolio of lab write-ups. I'm applying to graduate programmes in cybersecurity and systems security for Fall 2027.</p>
+  </section>
+
+  <section aria-labelledby="h-now">
+    <h2 id="h-now">Right now</h2>
+    <div class="now">
+      <div><div class="lbl">Training</div><div class="val">Cybersecurity bootcamp</div><div class="sub">CODED Kuwait, Oct–Dec 2026</div></div>
+      <div><div class="lbl">Working</div><div class="val">Cybersecurity intern</div><div class="sub">National Cyber Security Center, Kuwait</div></div>
+      <div><div class="lbl">Next</div><div class="val">Graduate study, Fall 2027</div><div class="sub">Cybersecurity &amp; systems security</div></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-proj">
+    <h2 id="h-proj">Selected work</h2>
+    <div class="projects">
+      <article class="proj">
+        <div class="when">2026</div>
+        <h3>Browser cookie management as a graph</h3>
+        <p>Final-year project supervised by Dr. Maribel Fernandez. Modelled cookie behaviour across six scenarios in Neo4j with a library of Cypher queries. The key finding: cookies can persist even after a user withdraws consent.</p>
+        <div class="meta"><span class="tag">Neo4j</span><span class="tag">Cypher</span><span class="tag">Privacy</span></div>
+      </article>
+      <article class="proj">
+        <div class="when">2026 →</div>
+        <h3>Cybersecurity bootcamp portfolio</h3>
+        <p>Labs and blue-team and red-team write-ups from the CODED bootcamp, documented as I go.</p>
+        <div class="meta"><span class="tag">Linux</span><span class="tag">Git</span><span class="tag">Write-ups</span></div>
+        <a class="link" href="https://github.com/Fahadalr16/cybersecurity-bootcamp" target="_blank" rel="noopener">View on GitHub →</a>
+      </article>
+      <article class="proj">
+        <div class="when">KCL</div>
+        <h3>Flood attack analysis</h3>
+        <p>Ran ICMP and DNS/UDP flood attacks between virtual machines and analysed the traffic and its impact with tcpdump, Wireshark and iperf.</p>
+        <div class="meta"><span class="tag">Wireshark</span><span class="tag">tcpdump</span><span class="tag">iperf</span></div>
+      </article>
+      <article class="proj">
+        <div class="when">KCL</div>
+        <h3>Django ticketing system</h3>
+        <p>Team project with role-based authentication for staff and students and an AWS Lambda integration for AI-drafted responses. Code available on request.</p>
+        <div class="meta"><span class="tag">Django</span><span class="tag">Python</span><span class="tag">AWS Lambda</span></div>
+      </article>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-skills">
+    <h2 id="h-skills">What I work with</h2>
+    <div class="skills">
+      <div><h3>Security</h3><p>Network attacks (ARP, DNS, BGP, TCP hijacking), WLAN security, cryptography fundamentals, traffic analysis</p></div>
+      <div><h3>Tools</h3><p>Wireshark, tcpdump, Linux, Git, Neo4j, Docker basics</p></div>
+      <div><h3>Programming</h3><p>Python, Django, Java, SQL, Cypher, JavaScript</p></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-contact">
+    <h2 id="h-contact">Get in touch</h2>
+    <div class="contact">
+      <a class="btn" href="https://github.com/Fahadalr16" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn" href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a>
+      <span class="btn" style="cursor:text;user-select:all">your.email@example.com</span>
+    </div>
+  </section>
+
+  <footer>Kuwait · try typing <b>help</b> in the terminal</footer>
+</div>
+
+<div class="term" id="term" hidden role="dialog" aria-label="Terminal">
+  <div class="term-bar"><span>fahad@kw — bash</span><button type="button" id="term-close">close ✕</button></div>
+  <div class="term-out" id="out" aria-live="polite"></div>
+  <div class="chips" id="chips"></div>
+  <form class="term-in" id="form"><label for="cmd">fahad@kw:~$</label><input id="cmd" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Command"></form>
+</div>
+
+<script>
+const term=document.getElementById('term'),out=document.getElementById('out'),input=document.getElementById('cmd');
+const esc=s=>s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const files={
+ 'resume.txt':
+`<span class="hi">FAHAD ALABDULRAZZAQ</span>
+Kuwait · github.com/Fahadalr16
+
+<span class="hi">EDUCATION</span>
+  BSc Computer Science — King's College London
+  Final-year project: Browser cookie management (graph-based, Neo4j)
+
+<span class="hi">EXPERIENCE</span>
+  Cybersecurity Intern — National Cyber Security Center, Kuwait (2026–)
+  Cybersecurity Bootcamp — CODED Kuwait (Oct–Dec 2026)
+
+<span class="hi">SKILLS</span>
+  Network security · traffic analysis · cryptography
+  Python · Django · SQL · Cypher · Git · Linux
+
+<span class="dim">Full CV: type "open cv"</span>`,
+ 'about.txt':'CS grad from KCL, heading into cybersecurity.\nGap year: bootcamp + internship + portfolio.\nNext: graduate study, Fall 2027.',
+ 'contact.txt':'GitHub   <a href="https://github.com/Fahadalr16" target="_blank" rel="noopener">github.com/Fahadalr16</a>\nEmail    your.email@example.com',
+};
+const cmds={
+ help:()=>`Commands:
+  <span class="hi">whoami</span>          who is this
+  <span class="hi">ls</span>              list files
+  <span class="hi">cat</span> &lt;file&gt;      read a file (try: cat resume.txt)
+  <span class="hi">projects</span>        selected work
+  <span class="hi">open cv</span>         open the PDF CV
+  <span class="hi">clear</span>           clear the screen
+  <span class="hi">exit</span>            close the terminal`,
+ whoami:()=>'fahad — CS @ KCL, aspiring security engineer, based in Kuwait',
+ ls:()=>Object.keys(files).join('   ')+'   <span class="dim">resume.pdf</span>',
+ cat:a=>!a?'cat: missing file operand':files[a]??(a==='resume.pdf'?'cat: resume.pdf is binary. try "open cv"':`cat: ${esc(a)}: No such file or directory`),
+ projects:()=>`- Browser cookie management as a graph (Neo4j)
+- Cybersecurity bootcamp portfolio → <a href="https://github.com/Fahadalr16/cybersecurity-bootcamp" target="_blank" rel="noopener">GitHub</a>
+- Flood attack analysis (Wireshark, tcpdump)
+- Django ticketing system`,
+ open:a=>{if(a==='cv'||a==='resume.pdf'){document.getElementById('cv-btn').click();return 'opening resume.pdf ...'}return `open: ${esc(a||'')}: not found`},
+ sudo:()=>'Nice try. This incident will be reported. 🚨',
+ pwd:()=>'/home/fahad',
+ date:()=>new Date().toString(),
+ echo:a=>esc(a||''),
+ clear:()=>{out.innerHTML='';return null},
+ exit:()=>{close();return null},
+};
+function print(html,cls){const d=document.createElement('div');if(cls)d.className=cls;d.innerHTML=html;out.appendChild(d);out.scrollTop=out.scrollHeight}
+function run(line){
+  line=line.trim();print(esc(line),'cmd');if(!line)return;
+  hist.push(line);hi=hist.length;
+  const [c,...rest]=line.split(/\s+/);const f=cmds[c.toLowerCase()];
+  const r=f?f(rest.join(' ')):`${esc(c)}: command not found. type "help"`;
+  if(r!==null)print(r);
+}
+let hist=[],hi=0,booted=false;
+function open(){term.hidden=false;if(!booted){booted=true;print('Welcome. Type <span class="hi">help</span> to see what you can do, or tap a command below.','dim')}setTimeout(()=>input.focus(),60)}
+function close(){term.hidden=true;document.getElementById('term-open').focus()}
+document.getElementById('term-open').onclick=open;
+document.getElementById('term-close').onclick=close;
+document.getElementById('form').onsubmit=e=>{e.preventDefault();run(input.value);input.value=''};
+input.addEventListener('keydown',e=>{
+  if(e.key==='ArrowUp'&&hi>0){hi--;input.value=hist[hi];e.preventDefault()}
+  else if(e.key==='ArrowDown'){hi=Math.min(hist.length,hi+1);input.value=hist[hi]||'';e.preventDefault()}
+  else if(e.key==='Tab'){e.preventDefault();const v=input.value;const m=[...Object.keys(cmds),...Object.keys(files).map(f=>'cat '+f)].find(k=>k.startsWith(v)&&v);if(m)input.value=m}
+});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!term.hidden)close();if(e.key==='`'&&term.hidden&&document.activeElement.tagName!=='INPUT'){e.preventDefault();open()}});
+['whoami','cat resume.txt','projects','ls','help'].forEach(c=>{const b=document.createElement('button');b.type='button';b.textContent=c;b.onclick=()=>{run(c);input.focus()};document.getElementById('chips').appendChild(b)});
+</script>
+</body>
+</html>
